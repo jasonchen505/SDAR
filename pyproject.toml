@@ -12,13 +12,13 @@ build-backend = "setuptools.build_meta"
 # project (PEP 621 metadata)
 # -------------------------------
 [project]
-name = "verl"
-# We'll mark the version as "dynamic" because it's read from the file "verl/version/version" 
-# (PEP 621 calls this "dynamic version"). 
+name = "sdar"
+# We'll mark the version as "dynamic" because it's read from the file "verl/version/version"
+# (PEP 621 calls this "dynamic version").
 # The actual version is specified in the [tool.setuptools.dynamic] section below.
 dynamic = ["version", "dependencies", "optional-dependencies", "authors", "urls"]
 
-description = "verl: Volcano Engine Reinforcement Learning for LLM"
+description = "SDAR: Self-Distillation with Adaptive Revision for LLM"
 license = {file = "LICENSE"}  # or "Apache-2.0", if you prefer an SPDX identifier
 readme = {file = "README.md", content-type = "text/markdown"}
 requires-python = ">=3.8"
