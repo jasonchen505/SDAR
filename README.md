@@ -15,7 +15,7 @@ Self-Distilled Agentic Reinforcement Learning
 
 ## 🔥 Overview
 
-We introduce **SDAR**, a self-distilled agentic reinforcement learning method.
+We introduce **SDAR**, a Self-Distilled Agentic Reinforcement learning method.
 <div align="center" style="display:flex; justify-content:center; gap:20px; align-items:flex-start;">
   <img src="docs/sdar/sdar_teaser.png" alt="motivation" style="width:40%;">
   <img src="docs/sdar/sdart_method.png" alt="method" style="width:58%;">
