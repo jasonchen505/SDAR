@@ -176,6 +176,24 @@ If you find this project useful, welcome to cite us.
       primaryClass={cs.LG},
       url={https://arxiv.org/abs/2605.15155}, 
 }
+@misc{lu2026skill0,
+      title={SKILL0: In-Context Agentic Reinforcement Learning for Skill Internalization}, 
+      author={Zhengxi Lu and Zhiyuan Yao and Jinyang Wu and Chengcheng Han and Qi Gu and Xunliang Cai and Weiming Lu and Jun Xiao and Yueting Zhuang and Yongliang Shen},
+      year={2026},
+      eprint={2604.02268},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2604.02268}, 
+}
+@misc{shi2026skill1,
+      title={Skill1: Unified Evolution of Skill-Augmented Agents via Reinforcement Learning}, 
+      author={Yaorui Shi and Yuxin Chen and Zhengxi Lu and Yuchun Miao and Shugui Liu and Qi GU and Xunliang Cai and Xiang Wang and An Zhang},
+      year={2026},
+      eprint={2605.06130},
+      archivePrefix={arXiv},
+      primaryClass={cs.AI},
+      url={https://arxiv.org/abs/2605.06130}, 
+}
 ```
 
 ## 🤝 Acknowledgement
