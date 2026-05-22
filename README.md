@@ -38,8 +38,8 @@ SDAR achieves substantial improvements over the standard RL baseline on ALFWorld
 ### Python environment
 
 ```bash
-conda create -n skillzero python==3.12 -y
-conda activate skillzero
+conda create -n sdar python==3.12 -y
+conda activate sdar
 
 pip3 install vllm==0.11.0
 
