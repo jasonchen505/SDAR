@@ -157,7 +157,7 @@ bash examples/sdar_trainer/run_alfworld_3b.sh
 bash examples/sdar_trainer/run_search_3b.sh
 bash examples/sdar_trainer/run_webshop_3b.sh
 ```
-
+Our reproduced codes for GRPO, Skill-GRPO, OPSD, GRPO+OPSD, Skill-SD, and RLSD are also provided in `examples/`.
 ### Merge checkpoints
 
 See `scripts/model_merger.py` for FSDP/Megatron merge examples using paths under `./checkpoints/...`.
