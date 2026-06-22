@@ -26,6 +26,12 @@ from agent_system.environments import EnvironmentManagerBase
 from typing import List, Dict
 from verl.protocol import pad_dataproto_to_divisor, unpad_dataproto
 
+
+def _gamefiles_from_infos(infos: List[Dict]) -> np.ndarray:
+    """Extract per-env AlfWorld gamefile paths from env step/reset infos."""
+    return np.array([info.get("extra.gamefile") for info in infos], dtype=object)
+
+
 class TrajectoryCollector:
     def __init__(self, config, tokenizer: PreTrainedTokenizer, processor=None):
         """
@@ -67,6 +73,7 @@ class TrajectoryCollector:
         obs_texts = obs.get('text', None)
         obs_images = obs.get('image', None)
         obs_anchors = obs.get('anchor', None)
+        obs_gamefiles = obs.get('gamefile', None)
         obs_text = obs_texts[item] if obs_texts is not None else None
         obs_image = obs_images[item] if obs_images is not None else None
         obs_anchor = obs_anchors[item] if obs_anchors is not None else None
@@ -181,6 +188,12 @@ class TrajectoryCollector:
             'index': item,
             'data_source': data_source
         })
+
+        # AlfWorld SDAR/RLSD: pass gamefile so teacher can inject task-specific skills.
+        if obs_gamefiles is not None:
+            gamefile = obs_gamefiles[item]
+            if gamefile is not None:
+                row_dict['gamefile'] = gamefile if isinstance(gamefile, str) else str(gamefile)
 
         if self.config.data.get('return_raw_chat', False):
             row_dict['raw_prompt'] = chat.tolist()
@@ -309,6 +322,7 @@ class TrajectoryCollector:
 
         # Initial observations from the environment
         obs, infos = envs.reset(kwargs=gen_batch.non_tensor_batch.pop('env_kwargs', None))
+        current_gamefiles = _gamefiles_from_infos(infos)
 
         lenght_obs = len(obs['text']) if obs['text'] is not None else len(obs['image'])
         assert len(gen_batch.batch) == lenght_obs, f"gen_batch size {len(gen_batch.batch)} does not match obs size {lenght_obs}"
@@ -334,7 +348,10 @@ class TrajectoryCollector:
         for _step in range(self.config.env.max_steps):
             active_masks = np.logical_not(is_done)
 
-            batch = self.preprocess_batch(gen_batch=gen_batch, obs=obs)
+            obs_input = obs
+            if current_gamefiles is not None:
+                obs_input = {**obs, 'gamefile': current_gamefiles}
+            batch = self.preprocess_batch(gen_batch=gen_batch, obs=obs_input)
 
             batch_keys_to_pop = ["input_ids", "attention_mask", "position_ids"]
             non_tensor_batch_keys_to_pop = ["raw_prompt_ids"]
@@ -365,8 +382,8 @@ class TrajectoryCollector:
             text_actions = self.tokenizer.batch_decode(batch.batch['responses'], skip_special_tokens=True)
             
             next_obs, rewards, dones, infos = envs.step(text_actions)
+            current_gamefiles = _gamefiles_from_infos(infos)
 
-            
             if len(rewards.shape) == 2:
                 rewards = rewards.squeeze(1)
             if len(dones.shape) == 2:

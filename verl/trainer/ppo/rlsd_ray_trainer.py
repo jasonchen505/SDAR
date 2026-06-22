@@ -92,8 +92,15 @@ def build_teacher_batch(
         gamefile = batch.non_tensor_batch.get("gamefile", None)
         data_source = batch.non_tensor_batch.get("data_source", None)
         if gamefile is not None:
-            gf = gamefile[i] if isinstance(gamefile[i], str) else str(gamefile[i])
-            skill_text = skill_provider.get_privileged_info(gf)
+            gf = gamefile[i]
+            if gf is not None:
+                gf = gf if isinstance(gf, str) else str(gf)
+                skill_text = skill_provider.get_privileged_info(gf)
+            elif data_source is not None:
+                ds = data_source[i] if isinstance(data_source[i], str) else str(data_source[i])
+                skill_text = skill_provider.get_privileged_info_from_data_source(ds, prompt_text)
+            else:
+                skill_text = skill_provider.get_privileged_info_from_prompt(prompt_text)
         elif data_source is not None:
             ds = data_source[i] if isinstance(data_source[i], str) else str(data_source[i])
             skill_text = skill_provider.get_privileged_info_from_data_source(ds, prompt_text)

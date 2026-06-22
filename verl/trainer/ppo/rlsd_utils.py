@@ -117,6 +117,7 @@ class SkillProvider:
           - data_source in ('nq', 'triviaqa') -> direct_retrieval
           - prompt contains 'which' + 'or' (without 'for') -> compare
           - data_source == 'hotpotqa' -> multi_hop_reasoning
+          - data_source == 'text' (AlfWorld/Webshop parquet) -> prompt keyword matching
           - otherwise -> general skills only (unknown)
         """
         if self.skill_all:
@@ -136,6 +137,8 @@ class SkillProvider:
             elif data_source in ("2wikimultihopqa", "musique", "bamboogle"):
                 task_type = "multi_hop_reasoning"
 
+        if task_type is None and data_source == "text":
+            return self.get_privileged_info_from_prompt(prompt_text)
         return self._get_skill_text(task_type)
 
 
