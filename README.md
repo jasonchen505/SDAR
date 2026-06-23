@@ -30,7 +30,7 @@ SDAR achieves substantial improvements over the standard RL baseline on ALFWorld
 </div>
 
 ## 🗞️ News
-- **`2026-6-22`**: 🔥🔥 We fixed an important bug: AlfWorld teacher skill retrieval problem ([issue #35](https://github.com/ZJU-REAL/SDAR/issues/35)). Please clone the repo again and have a try.
+- **`2026-6-22`**: 🔥🔥 We fixed a bug ([issue #35](https://github.com/ZJU-REAL/SDAR/issues/35)) about AlfWorld teacher skill retrieval problem. Please clone the repo again and have a try.
 
 - **`2026-5-15`**: 🔥 We released our paper and code.
 
